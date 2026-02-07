@@ -388,9 +388,10 @@
     let isMovingScheduled = false;
     let yesScale = 1;
 
+    // tweakables
     const MIN_JUMP_PX = 120;
     const DELAY_MIN_MS = 20;
-    const DELAY_MAX_MS = 160;
+    const DELAY_MAX_MS = 200;
     const SAFE_YES_MARGIN = 14;
 
     const lines = [
@@ -555,7 +556,7 @@
       e.preventDefault();
       noClicks++;
 
-      yesScale = Math.min(1.35, yesScale + 0.04);
+      yesScale += 0.1;
       yesBtn.style.setProperty("--yes-scale", yesScale);
       yesBtn.classList.add("grow");
 
