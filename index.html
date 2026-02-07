@@ -4,68 +4,58 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>💘 Will you be my Valentine?</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
     <style>
         :root{
-          --bg1:#ffd6e8;
-          --bg2:#fff3f8;
           --pink:#ff4d88;
           --pink2:#ff7bb0;
           --text:#2b2b2b;
         }
-        *{ box-sizing:border-box; }
 
+        *{ box-sizing:border-box; }
         html, body { height: 100%; }
 
-html{
-  position: relative;
+        html{
+          position: relative;
+          background: linear-gradient(
+            120deg,
+            #ffd6e8,
+            #ffe6b3,
+            #ffb3d1,
+            #fff0c2,
+            #ffd6e8
+          );
+          background-size: 400% 400%;
+          animation: gradientShift 18s ease-in-out infinite;
+        }
 
-  /* animated gradient */
-  background: linear-gradient(
-    120deg,
-    #ffd6e8,   /* soft pink */
-    #ffe6b3,   /* warm yellow */
-    #ffb3d1,   /* rose */
-    #fff0c2,   /* creamy yellow */
-    #ffd6e8
-  );
-  background-size: 400% 400%;
-  animation: gradientShift 18s ease-in-out infinite;
-}
-.great-vibes{
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(40px, 7vw, 54px);
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  color: #ff4d88;
-  margin-bottom: 6px;
-}
-        /* Animated Gradient Overlay */
         html::before{
-        content:"";
-        position:fixed;
-        inset:-80px;
-        background:
+          content:"";
+          position:fixed;
+          inset:-80px;
+          background:
             radial-gradient(circle at 15% 25%, rgba(255,77,136,.40), transparent 45%),
             radial-gradient(circle at 85% 30%, rgba(255,123,176,.34), transparent 52%),
             radial-gradient(circle at 55% 85%, rgba(255,255,255,.45), transparent 58%);
-        filter: blur(14px);
-        animation: floatBg 12s ease-in-out infinite alternate;
-        z-index: 0;
-        pointer-events:none;
+          filter: blur(14px);
+          animation: floatBg 12s ease-in-out infinite alternate;
+          z-index: 0;
+          pointer-events:none;
         }
 
         body{
-        margin:0;
-        min-height:100vh;
-        display:grid;
-        place-items:center;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        color:var(--text);
-        overflow:hidden;
-        position: relative;
+          margin:0;
+          min-height:100vh;
+          display:grid;
+          place-items:center;
+          font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+          color:var(--text);
+          overflow:hidden;
+          position: relative;
         }
 
         .card{
@@ -77,19 +67,28 @@ html{
           box-shadow: 0 14px 45px rgba(0,0,0,0.12);
           text-align:center;
           position:relative;
+          z-index: 1;
         }
-        .card{ z-index: 1; }
-        .hearts{ z-index: 999; }
 
         h1{
           margin:12px 0 8px;
           font-size: clamp(22px, 5vw, 36px);
           line-height:1.1;
         }
+
         p{
           margin:0 0 14px;
           font-size:16px;
           opacity:0.9;
+        }
+
+        .great-vibes{
+          font-family: 'Great Vibes', cursive;
+          font-size: clamp(40px, 7vw, 54px);
+          font-weight: 400;
+          letter-spacing: 0.5px;
+          color: var(--pink);
+          margin-bottom: 6px;
         }
 
         .gif-wrap{
@@ -97,9 +96,10 @@ html{
           justify-content:center;
           margin-bottom:10px;
         }
+
         img.gif{
           width:min(360px, 82vw);
-          max-height:48vh; /* adjust if needed */
+          max-height:48vh;
           height:auto;
           object-fit:cover;
           border-radius:18px;
@@ -128,14 +128,17 @@ html{
           user-select:none;
           -webkit-tap-highlight-color: transparent;
         }
+
         #yes{
           background: linear-gradient(135deg, var(--pink), var(--pink2));
           color:white;
           min-width:128px;
         }
+
         #yes.grow{
-  transform: scale(var(--yes-scale, 1));
-}
+          transform: scale(var(--yes-scale, 1));
+        }
+
         #no{
           background: rgba(255,255,255,0.98);
           color:#444;
@@ -152,17 +155,18 @@ html{
           transition: opacity .25s ease, transform .25s ease;
           min-height:24px;
         }
+
         .result.show{
           opacity:1;
           transform: translateY(0);
         }
+
         .small{
           margin-top:10px;
           font-size:14px;
           opacity:0.7;
         }
 
-        /* hearts */
         .hearts{
           pointer-events:none;
           position:fixed;
@@ -170,12 +174,14 @@ html{
           display:none;
           z-index:999;
         }
+
         .heart{
           position:absolute;
           font-size:28px;
           animation: floatUp 1.7s ease-in forwards;
           filter: drop-shadow(0 10px 10px rgba(0,0,0,0.12));
         }
+
         @keyframes floatUp{
           from { transform: translateY(0) scale(1); opacity:1; }
           to   { transform: translateY(-160px) scale(1.7); opacity:0; }
@@ -185,124 +191,130 @@ html{
         .page.active{ display:block; }
 
         .final-text{
-  font-size: clamp(20px, 6vw, 26px); /* ausgewogen, nicht mehr zu groß */
-  font-weight: 800;
-  line-height: 1.2;
-  margin-top: 10px;
-  letter-spacing: 0.2px;
-}
-        .yay-text{
-  font-size: clamp(22px, 5vw, 30px);
-  font-weight: 800;
-  margin-bottom: 6px;
-}
-/* Mp3 Player styling */
-.player{
-  margin-top: 14px;
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.65);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.10);
-  backdrop-filter: blur(6px);
-}
-
-.player-row{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.player-btn{
-  border:0;
-  padding:10px 14px;
-  border-radius:999px;
-  font-weight:800;
-  cursor:pointer;
-  background: linear-gradient(135deg, var(--pink), var(--pink2));
-  color:#fff;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
-}
-
-.player-label{
-  font-size:12px;
-  font-weight:700;
-  opacity:0.8;
-}
-
-.player-vol{
-  width: 140px;
-}
-
-.player-voltext{
-  font-size:12px;
-  font-weight:800;
-  opacity:0.8;
-  min-width: 38px;
-  text-align:left;
-}
-
-        /* transition page spin-in */
-        .spin-in{
-           animation: spinIn 1s cubic-bezier(.2,.8,.2,1) both;
+          font-size: clamp(20px, 6vw, 26px);
+          font-weight: 800;
+          line-height: 1.2;
+          margin-top: 10px;
+          letter-spacing: 0.2px;
         }
+
+        .yay-text{
+          font-size: clamp(22px, 5vw, 30px);
+          font-weight: 800;
+          margin-bottom: 6px;
+        }
+
+        .player{
+          margin-top: 14px;
+          padding: 12px 14px;
+          border-radius: 18px;
+          background: rgba(255,255,255,0.65);
+          box-shadow: 0 10px 26px rgba(0,0,0,0.10);
+          backdrop-filter: blur(6px);
+        }
+
+        .player-row{
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          gap:10px;
+          flex-wrap:wrap;
+        }
+
+        .player-btn{
+          border:0;
+          padding:10px 14px;
+          border-radius:999px;
+          font-weight:800;
+          cursor:pointer;
+          background: linear-gradient(135deg, var(--pink), var(--pink2));
+          color:#fff;
+          box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+        }
+
+        .player-label{
+          font-size:12px;
+          font-weight:700;
+          opacity:0.8;
+        }
+
+        .player-vol{ width: 140px; }
+
+        .player-voltext{
+          font-size:12px;
+          font-weight:800;
+          opacity:0.8;
+          min-width: 38px;
+          text-align:left;
+        }
+
+        .player-cover{
+          width: 44px;
+          height: 44px;
+          border-radius: 10px;
+          object-fit: cover;
+          box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+          margin-right: 6px;
+        }
+
+        .spin-in{
+          animation: spinIn 1s cubic-bezier(.2,.8,.2,1) both;
+        }
+
         @keyframes spinIn{
-            0%   { transform: rotate(-540deg) scale(0.75); opacity:0; }
-            70%  { transform: rotate(20deg)   scale(1.03); opacity:1; }
-            100% { transform: rotate(0deg)    scale(1);    opacity:1; }
+          0%   { transform: rotate(-540deg) scale(0.75); opacity:0; }
+          70%  { transform: rotate(20deg)   scale(1.03); opacity:1; }
+          100% { transform: rotate(0deg)    scale(1);    opacity:1; }
         }
 
         .achievement{
-  margin-top:10px;
-  padding:8px 14px;
-  display:inline-block;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:700;
-  background: linear-gradient(135deg, #ffe08a, #ffcf40);
-  color:#5a4300;
-  box-shadow: 0 6px 18px rgba(0,0,0,.15);
-  opacity:0;
-  transform: translateY(6px) scale(0.95);
-  transition: opacity .35s ease, transform .35s ease;
-}
+          margin-top:10px;
+          padding:8px 14px;
+          display:inline-block;
+          border-radius:999px;
+          font-size:13px;
+          font-weight:700;
+          background: linear-gradient(135deg, #ffe08a, #ffcf40);
+          color:#5a4300;
+          box-shadow: 0 6px 18px rgba(0,0,0,.15);
+          opacity:0;
+          transform: translateY(6px) scale(0.95);
+          transition: opacity .35s ease, transform .35s ease;
+        }
 
-.achievement.show{
-  animation: popAchievement .5s ease-out both;
-}
+        .achievement.show{
+          animation: popAchievement .5s ease-out both;
+        }
 
-@keyframes popAchievement{
-  0%{ transform: scale(0.8); opacity:0; }
-  70%{ transform: scale(1.05); }
-  100%{ transform: scale(1); opacity:1; }
-}
-@keyframes gradientShift{
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+        @keyframes popAchievement{
+          0%{ transform: scale(0.8); opacity:0; }
+          70%{ transform: scale(1.05); }
+          100%{ transform: scale(1); opacity:1; }
+        }
 
-@keyframes floatBg{
-  0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(24px,-18px) scale(1.06); }
-    }
+        @keyframes gradientShift{
+          0%   { background-position: 0% 50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatBg{
+          0%   { transform: translate(0,0) scale(1); }
+          100% { transform: translate(24px,-18px) scale(1.06); }
+        }
     </style>
 </head>
 
 <body>
 <div class="hearts" id="hearts"></div>
 
-<!-- PAGE 1 -->
 <main class="card page active" id="page1">
     <div class="gif-wrap">
-        <img class="gif"
-             src="assets/gifs/flowers.gif">
+        <img class="gif" src="assets/gifs/flowers.gif" alt="">
     </div>
 
     <h1 class="great-vibes">Hanna</h1>
     <h1>Will you be my Valentine? 💘</h1>
-
 
     <div class="btn-row" id="arena">
         <button id="yes">Yes 💖</button>
@@ -311,33 +323,32 @@ html{
 
     <div class="result" id="result"></div>
     <div class="small">PS: the “No” button is a little shy today.</div>
+
     <div class="achievement" id="achievement">
-        🏅 Achievement unlocked: <strong>Teasing Expert 🏅 </strong>
+        Achievement unlocked: <strong>Teasing Expert</strong>
     </div>
 </main>
 
-<!-- PAGE TRANSITION (spin-in gif) -->
 <main class="card page" id="pageSpin">
     <div class="gif-wrap">
-        <img class="gif spin-in" id="spinGif"
-             src="assets/gifs/kittykiss.gif">
+        <img class="gif spin-in" id="spinGif" src="assets/gifs/kittykiss.gif" alt="">
     </div>
     <h1 class="spin-in">💞</h1>
 </main>
 
-<!-- PAGE 2 -->
 <main class="card page" id="page2">
     <div class="gif-wrap">
-        <img class="gif"
-             src="assets/gifs/fallinginlove.gif">
+        <img class="gif" src="assets/gifs/fallinginlove.gif" alt="">
     </div>
 
     <h1 class="yay-text">Yay! 💖</h1>
-    <p class="final-text">Get dressed up — we're going out! 🥳</p>
-    <div class="small">Cologne is waiting for you!  I love you 💖</div>
-    <!-- Music Player (Yay Page) -->
+    <p class="final-text">Get dressed up, we're going out! 🥳</p>
+    <div class="small">Cologne is waiting for you! I love you 💖</div>
+
     <div class="player" id="player">
         <div class="player-row">
+            <img class="player-cover" src="assets/tash-sultana-cover.jpg" alt="Song cover" />
+
             <button class="player-btn" id="playBtn" type="button">▶️ Play</button>
 
             <label class="player-label" for="vol">Volume</label>
@@ -347,11 +358,8 @@ html{
         </div>
 
         <audio id="song" preload="auto" playsinline>
-            <source src="./assets/Jungle%20-%20Tash%20Sultana%20(Official%20Audio).mp3" type="audio/mpeg">
+            <source src="assets/Jungle%20-%20Tash%20Sultana%20(Official%20Audio).mp3" type="audio/mpeg">
         </audio>
-
-        <div class="small" style="margin-top:12px; opacity:.8;">
-        </div>
     </div>
 </main>
 
@@ -367,26 +375,28 @@ html{
     const page2 = document.getElementById("page2");
     const achievement = document.getElementById("achievement");
 
+    const song = document.getElementById("song");
+    const playBtn = document.getElementById("playBtn");
+    const vol = document.getElementById("vol");
+    const volText = document.getElementById("volText");
+
     let noClicks = 0;
     let msgTimer;
 
-    // used to avoid tiny jumps
     let lastPos = { x: null, y: null };
     let moveTimer = null;
     let isMovingScheduled = false;
     let yesScale = 1;
 
-    // tweakables
-    const MIN_JUMP_PX = 120;          // <-- bigger = less tiny jumps
-    const DELAY_MIN_MS = 20;          // <-- minimal reaction delay
-    const DELAY_MAX_MS = 160;         // <-- maximal reaction delay
-    const SAFE_YES_MARGIN = 14;       // <-- keep "No" away from "Yes"
+    const MIN_JUMP_PX = 120;
+    const DELAY_MIN_MS = 20;
+    const DELAY_MAX_MS = 160;
+    const SAFE_YES_MARGIN = 14;
 
     const lines = [
       "nice try. but try again 🙂",
       "nope. try again 🙂",
       "wow… you’re really committed 😄",
-      "i could do this all day.",
       "i admire your persistence. unfortunately, no.",
       "are you testing my patience on purpose?",
       "why are you doing this to me?",
@@ -394,7 +404,6 @@ html{
       "please stop bullying the poor button 🥺",
       "okay wow. again?",
       "at this point i’m just impressed.",
-
       "the universe is gently whispering: yes.",
       "the no button would like a restraining order.",
       "i’m calling HR. this is harassment.",
@@ -402,13 +411,12 @@ html{
       "we both know how this ends 😌"
     ];
 
-    const extra = [,
+    const extra = [
       "the answer is still yes. just saying.",
       "i could do this all day.",
-      "i could do this all day.",
-      "i could do this all day.",
-      "i could do this all day.",
-      "i could do this all day.",
+      "still could do this all day.",
+      "no problem.",
+      "i could do this all day."
     ];
 
     function showMsg(text){
@@ -427,7 +435,7 @@ html{
     }
 
     function scheduleMoveNoButton(){
-      if (isMovingScheduled) return; // prevent stacking multiple timers
+      if (isMovingScheduled) return;
       isMovingScheduled = true;
 
       const delay = DELAY_MIN_MS + Math.random() * (DELAY_MAX_MS - DELAY_MIN_MS);
@@ -454,7 +462,6 @@ html{
       for(let i=0;i<50;i++){
         const x = minX + Math.random() * (maxX - minX);
         const y = minY + Math.random() * (maxY - minY);
-
 
         if (lastPos.x !== null) {
           const d = dist({x,y}, lastPos);
@@ -483,40 +490,12 @@ html{
         }
       }
 
-
       const x = minX + Math.random() * (maxX - minX);
       const y = minY + Math.random() * (maxY - minY);
       noBtn.style.left = x + "px";
       noBtn.style.top  = y + "px";
       lastPos = { x, y };
     }
-
-    // Desktop
-    noBtn.addEventListener("mouseenter", scheduleMoveNoButton);
-
-    // Mobile: only when actually touching the button (with delay)
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      scheduleMoveNoButton();
-    }, { passive:false });
-
-
-    noBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      noClicks++;
-      yesScale = Math.min(1.35, yesScale + 0.04);      // cap bei 1.35
-        yesBtn.style.setProperty("--yes-scale", yesScale);
-        yesBtn.classList.add("grow");
-      // Achievement after 5 successful "No" clicks
-    if (noClicks === 5) {
-    achievement.classList.add("show");
-    }
-
-      if(noClicks <= lines.length) showMsg(lines[noClicks - 1]);
-      else showMsg(extra[Math.floor(Math.random() * extra.length)]);
-
-      scheduleMoveNoButton();
-    });
 
     function spawnHearts(){
       hearts.innerHTML = "";
@@ -541,60 +520,75 @@ html{
       el.classList.add("active");
     }
 
+    function setVol(v){
+      song.volume = v;
+      vol.value = v;
+      volText.textContent = Math.round(v * 100) + "%";
+    }
+
+    setVol(0.2);
+
+    playBtn.addEventListener("click", async () => {
+      if (song.paused) {
+        try { await song.play(); } catch(e) {}
+        playBtn.textContent = "⏸️ Pause";
+      } else {
+        song.pause();
+        playBtn.textContent = "▶️ Play";
+      }
+    });
+
+    vol.addEventListener("input", () => setVol(parseFloat(vol.value)));
+
+    song.addEventListener("ended", () => {
+      playBtn.textContent = "▶️ Play";
+    });
+
+    noBtn.addEventListener("mouseenter", scheduleMoveNoButton);
+
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      scheduleMoveNoButton();
+    }, { passive:false });
+
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      noClicks++;
+
+      yesScale = Math.min(1.35, yesScale + 0.04);
+      yesBtn.style.setProperty("--yes-scale", yesScale);
+      yesBtn.classList.add("grow");
+
+      if (noClicks === 5) achievement.classList.add("show");
+
+      if (noClicks <= lines.length) showMsg(lines[noClicks - 1]);
+      else showMsg(extra[Math.floor(Math.random() * extra.length)]);
+
+      scheduleMoveNoButton();
+    });
+
     yesBtn.addEventListener("click", async () => {
-    yesBtn.disabled = true;
-    noBtn.disabled = true;
-    yesBtn.style.opacity = "0.95";
+      yesBtn.disabled = true;
+      noBtn.disabled = true;
+      yesBtn.style.opacity = "0.95";
 
-    spawnHearts();
+      spawnHearts();
 
-    // autoplay song on Yay flow
-    try {
+      try {
         song.currentTime = 0;
         await song.play();
         playBtn.textContent = "⏸️ Pause";
-    } catch (e) {
+      } catch (e) {
         playBtn.textContent = "▶️ Play";
-    }
+      }
 
-    setTimeout(() => showPage(pageSpin), 650);
-    setTimeout(() => showPage(page2), 3250);
+      setTimeout(() => showPage(pageSpin), 650);
+      setTimeout(() => showPage(page2), 3250);
     });
 
     window.addEventListener("load", () => {
       moveNoButtonNow();
     });
-// 🎵 MP3 player logic (Yay Page)
-const song = document.getElementById("song");
-const playBtn = document.getElementById("playBtn");
-const vol = document.getElementById("vol");
-const volText = document.getElementById("volText");
-
-function setVol(v){
-  song.volume = v;
-  vol.value = v;
-  volText.textContent = Math.round(v * 100) + "%";
-}
-
-// default volume (20%)
-setVol(0.2);
-
-playBtn.addEventListener("click", async () => {
-  if (song.paused) {
-    try { await song.play(); } catch(e) {}
-    playBtn.textContent = "⏸️ Pause";
-  } else {
-    song.pause();
-    playBtn.textContent = "▶️ Play";
-  }
-});
-
-vol.addEventListener("input", () => setVol(parseFloat(vol.value)));
-
-song.addEventListener("ended", () => {
-  playBtn.textContent = "▶️ Play";
-});
-
 </script>
 </body>
 </html>
