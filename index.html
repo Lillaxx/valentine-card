@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>💘 Will you be my Valentine?</title>
+    <title>💘 Will you be my Valentine? </title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,15 +59,23 @@
         }
 
         .card{
+          outline: 4px solid rgba(210, 90, 120, 0.35);
           width:min(680px, 92vw);
           padding:22px 18px;
           border-radius:22px;
-          background: rgba(255,255,255,0.78);
-          backdrop-filter: blur(8px);
-          box-shadow: 0 14px 45px rgba(0,0,0,0.12);
+          background: linear-gradient(180deg,
+              rgba(255, 214, 228, 0.95),
+              rgba(255, 235, 214, 0.90)
+            );
+          border: 1px solid rgba(255, 120, 170, 0.18);
+          backdrop-filter: blur(4px);
+          box-shadow:
+              0 14px 45px rgba(0,0,0,0.12),
+              0 0 0 1px rgba(255,255,255,0.22) inset;
           text-align:center;
           position:relative;
           z-index: 1;
+          margin-bottom: 20px;
         }
 
         h1{
@@ -84,11 +92,12 @@
 
         .great-vibes{
           font-family: 'Great Vibes', cursive;
-          font-size: clamp(40px, 7vw, 54px);
+          font-size: clamp(54px, 7vw, 54px);
           font-weight: 400;
-          letter-spacing: 0.5px;
+          letter-spacing: 0.8px;
           color: var(--pink);
           margin-bottom: 6px;
+          margin-top: 6px;
         }
 
         .gif-wrap{
@@ -222,10 +231,13 @@
           font-weight: 800;
           margin-bottom: 6px;
         }
+        .title-main{
+          padding-left: 15px;
+        }
 
         .player{
-          margin-top: 14px;
-          padding: 12px 14px;
+          margin-top: 26px;
+          padding: 10px 12px;
           border-radius: 18px;
           background: rgba(255,255,255,0.65);
           box-shadow: 0 10px 26px rgba(0,0,0,0.10);
@@ -242,25 +254,26 @@
 
         .player-btn{
           border:0;
-          padding:10px 14px;
+          padding:4px 8px;
           border-radius:999px;
-          font-weight:800;
+          font-weight:600;
           cursor:pointer;
+          opacity: 0.85;
           background: linear-gradient(135deg, var(--pink), var(--pink2));
           color:#fff;
-          box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+          box-shadow: 0 4px 10px rgba(0,0,0,0.12);
         }
 
         .player-label{
-          font-size:12px;
+          font-size:10px;
           font-weight:700;
           opacity:0.8;
         }
 
-        .player-vol{ width: 140px; }
+        .player-vol{ width: 120px; }
 
         .player-voltext{
-          font-size:12px;
+          font-size:10px;
           font-weight:800;
           opacity:0.8;
           min-width: 38px;
@@ -268,14 +281,33 @@
         }
 
         .player-cover{
-          width: 44px;
-          height: 44px;
-          border-radius: 10px;
+          display: true;
+          width: 38px;
+          height: 38px;
+          border-radius: 8px;
           object-fit: cover;
           box-shadow: 0 6px 16px rgba(0,0,0,0.25);
           margin-right: 6px;
         }
 
+        .floating-player{ display: none; }
+
+        #page2.active ~ .floating-player{
+          display: block;
+          position: fixed;
+          bottom: 8px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 2;
+        }
+
+        .floating-player .player{
+          padding: 6px 10px;
+          border-radius: 999px;
+          background: rgba(255,255,255,0.55);
+          backdrop-filter: blur(6px);
+          box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
         .spin-in{
           animation: spinIn 1s cubic-bezier(.2,.8,.2,1) both;
         }
@@ -333,13 +365,12 @@
     </div>
 
     <h1 class="great-vibes">Hanna</h1>
-    <h1>Will you be my Valentine? 💘</h1>
+    <h1 class="title-main">Will you be my Valentine? 💘</h1>
 
     <div class="btn-row" id="arena">
         <button id="yes">Yes 💖</button>
         <button id="no">No 🙃</button>
     </div>
-
     <div class="result" id="result"></div>
     <div class="small">PS: the “No” button is a little shy today.</div>
 
@@ -363,7 +394,8 @@
     <h1 class="yay-text">Yay! 💖</h1>
     <p class="final-text">Get dressed up, we're going out! 🥳</p>
     <div class="small">Cologne is waiting for you! I love you 💖</div>
-
+</main>
+<div class="floating-player">
     <div class="player" id="player">
         <div class="player-row">
             <img class="player-cover" src="assets/tash-sultana-cover.jpg" alt="Song cover" />
@@ -380,7 +412,7 @@
             <source src="assets/Jungle%20-%20Tash%20Sultana%20(Official%20Audio).mp3" type="audio/mpeg">
         </audio>
     </div>
-</main>
+</div>
 
 <script>
     const noBtn = document.getElementById("no");
@@ -408,9 +440,9 @@
     let yesScale = 1;
 
     // tweakables
-    const MIN_JUMP_PX = 120;
-    const DELAY_MIN_MS = 35;
-    const DELAY_MAX_MS = 300;
+    const MIN_JUMP_PX = 140;
+    const DELAY_MIN_MS = 20;
+    const DELAY_MAX_MS = 250;
     const SAFE_YES_MARGIN = 14;
 
     const lines = [
@@ -540,11 +572,13 @@
       el.classList.add("active");
     }
 
+
     function setVol(v){
-      song.volume = v;
-      vol.value = v;
-      volText.textContent = Math.round(v * 100) + "%";
+        song.volume = v;
+        vol.value = v;
+        volText.textContent = Math.round(v * 100) + "%";
     }
+
 
     setVol(0.2);
 
@@ -605,10 +639,10 @@
       setTimeout(() => showPage(pageSpin), 650);
       setTimeout(() => showPage(page2), 3250);
     });
-
     window.addEventListener("load", () => {
       moveNoButtonNow();
     });
+
 </script>
 </body>
 </html>
